@@ -1,4 +1,3 @@
-
 # takes the name of a view and puts it into core view content layer extension syntax
 # start by copying the root view name (no _config/_core) to your clipboard 
 #
