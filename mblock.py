@@ -8,9 +8,10 @@ import os
 # for program runtime calculation
 start_time = time.time()
 
-# The first argument of this program should be a path to a folder (A lookML project folder from a locally cloned repo)
-# The second argument of this profram should be a path to their desired destination
-# The output will be two folders -- CORE & CONFIG
+# The first argument of this program should be a path to a folder (A lookML project folder with model/dashboards/views)
+# The second argument of this program should be a path to their desired destination
+# The output will be two folders inside their specified destination -- CORE & CONFIG
+# This script DOES NOT ALTER the original source project!
 
 # STEP 1 define source folder and destination folder from arguments
 ogproj = str(sys.argv[1])
