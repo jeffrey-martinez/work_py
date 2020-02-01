@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import lkml
 import os
 import pandas as pd
-import PyPDF2
+import PyPDF4
 import requests
 import time
 import urllib3.request
@@ -10,7 +10,7 @@ import urllib3.request
 def pdfurls(path): 
   # Takes a FiveTran Schema ERD PDF and extracts the urls, returns a list called "urls"
 
-  PDF = PyPDF2.PdfFileReader(path)
+  PDF = PyPDF4.PdfFileReader(path)
 
   urls = []
   for page in range(PDF.numPages):
@@ -80,6 +80,13 @@ def descriptions(online, parsed, z):
         desc = online.loc[field, 'description']
         parsed['views'][0]['dimensions'][i]['description'] = desc.replace('\n', ' ')  
         z += 1
+  
+  # for j in range(0, len(parsed['views'][0]['dimension_groups'])):
+  #   for field in online['fieldname']:
+  #     if field == parsed['views'][0]['dimension_groups'][j]['name']:
+  #       desc = online.loc[field, 'description']
+  #       parsed['views'][0]['dimension_groups'][j]['description'] = desc.replace('\n', ' ')  
+  #       z += 1
   return z
 
 def main():
@@ -133,6 +140,10 @@ def main():
       z = z
       # print(link)  
     except KeyError:
+      print(f'No match found for view file named {webmatch}')
+      # newmatch = input("Please input a new description tablename to try: ")
+      # nlink = f[newmatch]
+      # descriptions(nlink, k, z)
       nomatch.append(webmatch)
       pass
 
