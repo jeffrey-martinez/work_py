@@ -155,25 +155,39 @@ include: "//@{{CONFIG_PROJECT_NAME}}/*.dashboard"
       if ogfilename.split(".")[1] == 'view':
         vname = ogfilename.split(".")[0]
         h = open(f"""{destinationpath}/CORE/{vname}_core.view.lkml""", 'w+')
-        h.write(f"""include: "//@{{CONFIG_PROJECT_NAME}}/{ogfilename}"
-
-view: {vname} {{
-  extends: [{vname}_config]
+        d = open(f"""{destinationpath}/CONFIG/{ogfilename}""", 'w+')
+        h.write(f"""include: "//@{{CONFIG_PROJECT_NAME}}/{ogfilename}" 
+        
+        """)
+        c = open(f"{sourcepath}/{ogfilename}", 'r')
+        parsed = lkml.load(c)
+        for g in range(len(parsed['views'])):
+          defname = parsed['views'][g]['name']
+          h.write(f"""
+view: {defname} {{
+  extends: [{defname}_config]
 }}
 
 """)
-        d = open(f"""{destinationpath}/CONFIG/{ogfilename}""", 'w+')
-        d.write(f"""view: {vname}_config {{
-  extends: [{vname}_core]
+          
+          d.write(f"""view: {defname}_config {{
+  extends: [{defname}_core]
   extension: required
 
   # Add view customizations here
   
-}}""")
+}}
 
-        c = open(f"{sourcepath}/{ogfilename}", 'r')
-        contents = c.read()
+""")
+
+          parsed['views'][g]['name'] = f"{parsed['views'][g]['name']}_core"
+
+        contents = lkml.dump(parsed)
+        h.write(f"""###################################################
+        
+""")
         h.write(contents)
+
   print(f"Writing CORE & CONFIG view files...")
   return
 
