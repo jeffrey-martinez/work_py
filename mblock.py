@@ -156,7 +156,7 @@ include: "//@{{CONFIG_PROJECT_NAME}}/*.dashboard"
         vname = ogfilename.split(".")[0]
         h = open(f"""{destinationpath}/CORE/{vname}_core.view.lkml""", 'w+')
         d = open(f"""{destinationpath}/CONFIG/{ogfilename}""", 'w+')
-        h.write(f"""include: "//@{{CONFIG_PROJECT_NAME}}/{ogfilename}" 
+        h.write(f"""include: "//@{{CONFIG_PROJECT_NAME}}/views/{ogfilename}" 
         
         """)
         c = open(f"{sourcepath}/{ogfilename}", 'r')
