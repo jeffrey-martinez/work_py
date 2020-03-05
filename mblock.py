@@ -117,7 +117,7 @@ include: "//@{{CONFIG_PROJECT_NAME}}/*.dashboard"
 
 """)
         print(f"Writing CONFIG includes...")
-        j.write(f"""include: "*.view"
+        j.write(f"""include: "views/*.view"
         
 """)
       # opens up the source model file 
